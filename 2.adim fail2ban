@@ -1,0 +1,36 @@
+sudo useradd -r -M -s /usr/sbin/nologin fail2ban                  #fail2ban kullanıcısı oluştur        
+ 
+sudo apt install fail2ban -y                                      #fail2ban servisini kur 
+
+sudo mkdir -p /etc/systemd/system/fail2ban.service.d/             #servis izinlerini düzenlemek amacıyla klasör oluştur
+sudo nano /etc/systemd/system/fail2ban.service.d/override.conf    #servis izinlerini düzenleyeceğimiz config dosyasını aç
+
+[Service]
+User=root
+Group=root
+Restart=always
+RestartSec=1
+
+sudo systemctl daemon-reload
+sudo systemctl restart fail2ban                                   #ayarların kaydedilmesi için servisi yeniden başlat         
+
+sudo systemctl status fail2ban                                    #fail2ban servisi çalışıyor mu kontrol et
+
+sudo nano /etc/fail2ban/jail.local                                #jail.conf'daki ayarları overwrite edeceğimiz jail.local e git
+
+[DEFAULT]
+ignoreip = 127.0.0.1/8
+bantime = 10m
+findtime = 2m 
+maxretry = 3
+
+[sshd]
+enabled = true
+port = ssh
+filter = sshd
+logpath = /var/log/auth.log
+banaction = iptables-multiport
+chain = f2b-sshd
+
+
+

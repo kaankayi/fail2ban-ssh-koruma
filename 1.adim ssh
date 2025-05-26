@@ -1,0 +1,7 @@
+sudo apt update                           #paketleri güncelle
+sudo apt install openssh-server -y        #ssh serverı kur
+
+sudo systemctl start ssh                  #ssh başlat
+sudo systemctl enable ssh                 #ssh aktifleştir
+
+sudo systemctl status ssh                 #ssh çalışıyor mu kontrol et

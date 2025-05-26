@@ -1,0 +1,17 @@
+1. SSH Erişim Denetimi ve Otomatik IP Kara Listeleme
+
+Araçlar: Fail2Ban, iptables
+
+Hedef: SSH brute-force saldırılarını tespit edip IP’leri engellemek
+
+   Adımlar:
+
+   1.    Bir Linux sanal makinesinde SSH sunucusunu etkinleştirin.
+
+   2.    Fail2Ban’i yükleyip, /etc/fail2ban/jail.conf dosyasında SSH’ye yönelik ayarları özelleştirin (örneğin, 3 başarısız giriş denemesi sonrası IP’yi 10 dakika engellemek).
+
+   3.    iptables kurallarını kullanarak IP’leri kara listeye ekleyin.
+
+   4.    IP’lerin listesi ve engellenme süreleri için bir Bash betiği yazın.
+
+   5.    Sunucu sahibine engellemeler hakkında e-posta bildirimleri gönderen bir cron job oluşturun.

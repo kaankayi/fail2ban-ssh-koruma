@@ -1,0 +1,28 @@
+
+sudo iptables -N f2b-sshd                                          #zincir oluştur
+sudo iptables -A INPUT -p tcp --dport 22 -j f2b-sshd               #trafiği bu zincire yönlendir
+sudo iptables -A f2b-sshd -j RETURN                                #zincirde eşleşen banlı ip adresi yoksa default kurallar
+
+
+sudo systemctl restart fail2ban
+
+
+sudo fail2ban-client status
+sudo fail2ban-client status sshd
+
+
+sudo nano /etc/fail2ban/filter.d/sshd.local.conf
+
+[Definition]
+failregex = 
+    ^%(__prefix_line)s(?:error: )?pam_unix\(sshd:auth\):\s+authentication failure;\s+.*\s+rhost=<HOST>\s.*$
+    ^%(__prefix_line)sFailed password for .* from <HOST> port \d+.*$
+    ^%(__prefix_line)sInvalid user .* from <HOST>.*$
+
+
+
+sudo fail2ban-client reload sshd
+
+
+
+
